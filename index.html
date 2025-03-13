@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee? Where have you Bean?</title>
+    <link rel="stylesheet" href="css/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/tablogo.png"/>
+    <style>
+        #main-content {
+            visibility: hidden;
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffefdb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div id="loader">
+        <div class="cup">
+            <span class="steam"></span>
+            <span class="steam"></span>
+            <span class="steam"></span>
+            <div class="cup-handle"></div>
+        </div>
+    </div>
+    
+    <div id="main-content">
+        <header>
+            <a href="index.html"><img class="" src="./images/Logo2.jpg" alt="Coffee House Logo" width="100"></a>
+            <h1>Coffee! Where have you bean?</h1>
+        </header>
+        <nav class="content">
+            <a href="index.html">Home</a>
+            <a href="locations.html">Our Locations</a>
+            <a href="aboutus.html">About us</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Example@gmail.com" target="_blank">Contact</a>
+            <a href="loading.html" target="_blank">Extras</a>
+            <a href="login.html" target="_blank">Login</a>
+        </nav>
+        <main>
+            <div class="container">
+                <h2 class="head">Welcome to our Coffee House</h2>
+                <br>
+                <p class="txt">Your one-stop destination for the finest coffee blends. It's Bean a while, check out our new menu.</p>
+                <br>
+                <a href="#menu" id="menu" class="coffee-button">Menu</a>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+        </main>
+    </div>
+    <section class="content-block">
+        <img src="images/Mocha Frap.jpg" alt="Mocha Frappuccino">
+        <div class="text-content">
+            <h2>Mocha Frap</h2>
+            <br>
+            <p>Indulge in pure bliss with our Mocha Frappuccino! A rich blend of bold espresso, velvety chocolate, and creamy milk, perfectly blended with ice for a smooth, refreshing treat. Topped with fluffy whipped cream and a drizzle of chocolate, every sip is a delightful escape. Cool, creamy and irresistible grab yours now!</p>
+        </div>
+    </section>
+
+    <section class="content-block">
+        <img src="images/Caramel Latte.jpg" alt="Caramel Latte">
+        <div class="text-content">
+            <h2>Caramel Latte</h2>
+            <br>
+            <p>Savor the smooth, buttery taste of our Caramel Latte! A rich shot of espresso blended with steamed milk and a swirl of golden caramel, creating a perfectly balanced, creamy delight. Finished with a caramel drizzle, each sip is pure indulgence. Warm, sweet, and irresistibly smooth. Treat yourself with one today!</p>
+        </div>
+    </section>
+    <section class="content-block">
+        <img src="images/Hazelnut Cappuccino.jpg" alt="Hazelnut Cappuccino">
+        <div class="text-content">
+            <h2>Hazelnut Cappuccino</h2>
+            <br>
+            <p>Warm, nutty, and irresistibly smooth—our Hazelnut Cappuccino is crafted with bold espresso, frothy steamed milk, and a touch of sweet hazelnut syrup. Topped with a delicate layer of foam, it’s a cozy indulgence in every sip. Rich, aromatic, and oh so satisfying treat, try it today at any of our branches.</p>
+        </div>
+    </section>
+
+    <section class="content-block">
+        <img src="images/Vanilla Cold Brew.jpg" alt="Vanilla Cold Brew">
+        <div class="text-content">
+            <h2>Vanilla Cold Brew</h2>
+            <br>
+            <p>Smooth, bold, and refreshingly cool—our Vanilla Cold Brew is steeped for hours to perfection, then infused with a touch of creamy vanilla sweetness. Served over ice, it’s the perfect balance of rich coffee flavor and silky smoothness. Cool, bold, and naturally sweet. Fuel your day with every sip!</p>
+        </div>
+    </section>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-center">
+                    <p>Coffee! Where have you Bean? All Rights Reserved.</p>
+                    <div class="socials">
+                        <a href="www.instagram.com"  target="_blank" rel="noopener noreferrer"><img src="./images/facebook.png" alt="Facebook Logo" class="social-logo"></a>
+                        <a href="www.facebook.com"  target="_blank" rel="noopener noreferrer"><img src="./images/instagram.png" alt="Instagram Logo" class="social-logo"></a>
+                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D"  target="_blank" rel="noopener noreferrer"><img src="./images/whatsapp.png" alt="WhatsApp Logo" class="social-logo"></a>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <p>Tel: +123 123-4567<br> #9 A Public Road, In Trinidad & Tobago</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                document.getElementById("loader").style.display = "none";
+                let mainContent = document.getElementById("main-content");
+                mainContent.style.visibility = "visible";
+                mainContent.style.opacity = "1";
+            }, 2500);
+        });
+    </script>
+    <script>
+        console.log("<Joshua's Lab's est 2024>")
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.content-block').forEach((element) => {
+            observer.observe(element);
+        });
+        </script>
+</body>
+</html>

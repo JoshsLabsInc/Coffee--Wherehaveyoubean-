@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee? Where have you Bean?</title>
+    <link rel="stylesheet" href="css/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/tablogo.png"/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #main-content {
+            visibility: hidden;
+            opacity: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffefdb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        #map {
+            height: 500px;
+            width: 80%;
+            margin: 20px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        body {
+            background-image: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="loader">
+        <div class="cup">
+            <span class="steam"></span>
+            <span class="steam"></span>
+            <span class="steam"></span>
+            <div class="cup-handle"></div>
+        </div>
+    </div>
+    
+    <div id="main-content">
+        <header>
+            <a href="index.html"><img src="./images/Logo2.jpg" alt="Coffee House Logo" width="100"></a>
+            <h1>Coffee! Where have you bean?</h1>
+        </header>
+        <nav class="content">
+            <a href="index.html">Home</a>
+            <a href="locations.html">Our Locations</a>
+            <a href="aboutus.html">About us</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Example@gmail.com" target="_blank">Contact</a>
+            <a href="loading.html" target="_blank">Extras</a>
+            <a href="login.html" target="_blank">Login</a>
+        </nav>
+        
+        <main>
+            <h2 style="color: #000;" class="head">Coffee! Where have you bean? Locations in Trinidad and Tobago</h2>
+            <div id="map"></div>
+        </main>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-center">
+                    <p>Coffee! Where have you Bean? All Rights Reserved.</p>
+                    <div class="socials">
+                        <a href="www.instagram.com"  target="_blank" rel="noopener noreferrer"><img src="./images/facebook.png" alt="Facebook Logo" class="social-logo"></a>
+                        <a href="www.facebook.com"  target="_blank" rel="noopener noreferrer"><img src="./images/instagram.png" alt="Instagram Logo" class="social-logo"></a>
+                        <a href="https://www.youtube.com/watch?v=9J62hGda9BQ&ab_channel=HarrisonBorbarrison"  target="_blank" rel="noopener noreferrer"><img src="./images/whatsapp.png" alt="WhatsApp Logo" class="social-logo"></a>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <p>Tel: +123 123-4567<br> #9 A Public Road, In Trinidad & Tobago</p>
+                </div>
+            </div>
+        </footer>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                document.getElementById("loader").style.display = "none";
+                let mainContent = document.getElementById("main-content");
+                mainContent.style.visibility = "visible";
+                mainContent.style.opacity = "1";
+            }, 2500);
+        });
+
+        var map = L.map('map').setView([10.6918, -61.2225], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var locations = [
+            { lat: 10.2793, lng: -61.4636, name: "SouthPark, San Fernando" },
+            { lat: 10.6592, lng: -61.5327, name: "MovieTowne, Port of Spain" },
+            { lat: 10.5183, lng: -61.4106, name: "Endeavour Chaguanas, Chaguanas" },
+            { lat: 10.5544, lng: -61.4086, name: "Munroe Road, Charlieville, Chaguanas" },
+            { lat: 10.2642, lng: -61.4448, name: "Gulf City Mall, Gulf View" },
+            { lat: 10.7050, lng: -61.5127, name: "Ellerslie Plaza, Maraval" }
+        ];
+
+        locations.forEach(location => {
+            L.marker([location.lat, location.lng])
+                .addTo(map)
+                .bindPopup(`<b>${location.name}</b>`);
+        });
+    </script>
+</body>
+</html>

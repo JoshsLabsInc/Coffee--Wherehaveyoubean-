@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee? Where have you Bean?</title>
+    <link rel="stylesheet" href="css/loader.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/tablogo.png"/>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffefdb;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+        }
+        .loading-text {
+            margin-top: 20px;
+        }
+        .loading-text::after {
+            content: '|';
+            display: inline-block;
+            animation: blink 0.6s infinite alternate;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader">
+        <div class="cup">
+            <span class="steam"></span>
+            <span class="steam"></span>
+            <span class="steam"></span>
+            <div class="cup-handle"></div>
+        </div>
+    </div>
+    <br>
+    <div class="loading-text"></div>
+    
+    <script>
+        console.log("Hello. wyd here?")
+        const textElement = document.querySelector('.loading-text');
+        const text = "Sorry, there's no extras right now...";
+        let index = 0;
+        let deleting = false;
+
+        function typeEffect() {
+            if (!deleting && index < text.length) {
+                textElement.textContent = text.slice(0, index + 1);
+                index++;
+                setTimeout(typeEffect, 100);
+            } else if (!deleting && index === text.length) {
+                setTimeout(() => {
+                    deleting = true;
+                    typeEffect();
+                }, 2000);
+            } else if (deleting && index > 0) {
+                textElement.textContent = text.slice(0, index - 1);
+                index--;
+                setTimeout(typeEffect, 100);
+            } else if (deleting && index === 0) {
+                deleting = false;
+                setTimeout(typeEffect, 300);
+            }
+        }
+
+        typeEffect();
+    </script>
+</body>
+</html>
