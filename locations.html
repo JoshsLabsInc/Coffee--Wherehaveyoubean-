@@ -65,6 +65,7 @@
         </nav>
         
         <main>
+            <br>
             <h2 style="color: #000;" class="head">Coffee! Where have you bean? Locations in Trinidad and Tobago</h2>
             <div id="map"></div>
         </main>
@@ -84,6 +85,7 @@
             </div>
         </footer>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
     <script>
         window.addEventListener("load", function() {
             setTimeout(function() {
@@ -93,12 +95,16 @@
                 mainContent.style.opacity = "1";
             }, 2500);
         });
-
-        var map = L.map('map').setView([10.6918, -61.2225], 10);
+    
+        // Initialize the map without setting view initially
+        var map = L.map('map');
+    
+        // Add tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
-
+    
+        // Location data
         var locations = [
             { lat: 10.2793, lng: -61.4636, name: "SouthPark, San Fernando" },
             { lat: 10.6592, lng: -61.5327, name: "MovieTowne, Port of Spain" },
@@ -107,12 +113,19 @@
             { lat: 10.2642, lng: -61.4448, name: "Gulf City Mall, Gulf View" },
             { lat: 10.7050, lng: -61.5127, name: "Ellerslie Plaza, Maraval" }
         ];
-
+    
+        // Add markers and collect bounds
+        var bounds = L.latLngBounds();
         locations.forEach(location => {
-            L.marker([location.lat, location.lng])
+            const marker = L.marker([location.lat, location.lng])
                 .addTo(map)
                 .bindPopup(`<b>${location.name}</b>`);
+            bounds.extend(marker.getLatLng());
         });
+    
+        // Fit bounds with padding to zoom out slightly
+        map.fitBounds(bounds, { padding: [100, 100] });
+
     </script>
 </body>
 </html>
