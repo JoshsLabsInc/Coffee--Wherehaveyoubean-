@@ -8,6 +8,20 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="images/tablogo.png"/>
     <style>
+
+        .content-block {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .content-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
         #main-content {
             visibility: hidden;
             opacity: 0;
@@ -100,6 +114,41 @@
             <p>Smooth, bold, and refreshingly cool—our Vanilla Cold Brew is steeped for hours to perfection, then infused with a touch of creamy vanilla sweetness. Served over ice, it’s the perfect balance of rich coffee flavor and silky smoothness. Cool, bold, and naturally sweet. Fuel your day with every sip!</p>
         </div>
     </section>
+    <section class="content-block">
+        <img src="images/IrishCreamLatte.jpg" alt="Irish Cream Latte">
+        <div class="text-content">
+            <h2>Irish Cream Latte</h2>
+            <br>
+            <p>A comforting blend of rich espresso and smooth milk infused with velvety Irish cream flavor. Topped with a light foam and a hint of cocoa, it’s your perfect cozy moment in a cup. Indulgent, warm, and deliciously creamy!</p>
+        </div>
+    </section>
+    
+    <section class="content-block">
+        <img src="images/TurkishCoffee.jpg" alt="Turkish Coffee">
+        <div class="text-content">
+            <h2>Traditional Turkish Coffee</h2>
+            <br>
+            <p>Brewed the authentic way — finely ground beans simmered in a cezve and served unfiltered for a bold, aromatic, and thick experience. Sip slowly, savor the intensity, and taste tradition in every rich cup.</p>
+        </div>
+    </section>
+    
+    <section class="content-block">
+        <img src="images/CoconutIcedCoffee.jpg" alt="Coconut Iced Coffee">
+        <div class="text-content">
+            <h2>Coconut Iced Coffee</h2>
+            <br>
+            <p>Beat the heat with our tropical twist — chilled espresso, a splash of coconut milk, and a hint of vanilla syrup over ice. Creamy, nutty, and irresistibly refreshing. A beachside vibe in every sip.</p>
+        </div>
+    </section>
+    
+    <section class="content-block">
+        <img src="images/CinnamonDolceLatte.jpg" alt="Cinnamon Dolce Latte">
+        <div class="text-content">
+            <h2>Cinnamon Dolce Latte</h2>
+            <br>
+            <p>Sweet and spicy come together in this delightful cup. Espresso mixed with steamed milk and cinnamon dolce syrup, topped with whipped cream and a cinnamon sugar sprinkle. A hug in a mug — cozy and flavorful.</p>
+        </div>
+    </section>
         <footer>
             <div class="footer-content">
                 <div class="footer-center">
@@ -124,6 +173,12 @@
                 mainContent.style.visibility = "visible";
                 mainContent.style.opacity = "1";
             }, 2500);
+        });
+        let delay = 0;
+        document.querySelectorAll('.content-block').forEach((element) => {
+            element.style.transitionDelay = `${delay}s`;
+            observer.observe(element);
+            delay += 0.2; // stagger each by 0.2s
         });
     </script>
     <script>
