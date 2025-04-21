@@ -7,49 +7,98 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="images/tablogo.png"/>
     <style>
-body {
-    font-family: Arial, sans-serif;
-    background: none;
-    color: #483125;
-    margin: 0;
-    padding: 0;
-    background-image: url('images/backdropx.jpg');
-}
+        body {
+            font-family: Arial, sans-serif;
+            background: none;
+            color: #483125;
+            margin: 0;
+            padding: 0;
+            background-image: url('images/backdropx.jpg');
+        }
+
+        /* Add container for group members */
+        .group-container {
+            background-color: rgba(255, 255, 255, 0.85); /* Transparent white */
+            cursor: pointer;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .group-container h2 {
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #4b2e2e;
+            font-family: 'Courier New', Courier, monospace; /* Unique Font */
+        }
+
+        .group-container ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 1.5rem;
+            color: #000000;
+            font-family: 'Courier New', Courier, monospace; /* Unique Font */
+        }
+
+        .group-container ul li {
+            margin: 10px 0;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .group-container ul li:hover {
+            color: #2d2824; /* Hover color */
+            font-weight: 800;
+            transform: scale(1.1); /* Hover effect */
+        }
     </style>
 </head>
-<div id="main-content">
-    <header>
-        <a href="index.html"><img class="" src="./images/Logo2.jpg" alt="Coffee House Logo" width="100"></a>
-        <h1 style="margin-right: 30px;">Coffee! Where have you bean?</h1>
-    </header>
-    <nav class="content">
-        <a href="index.html">Home</a>
-        <a href="locations.html">Our Locations</a>
-        <a href="aboutus.html">About us</a>
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Example@gmail.com" target="_blank">Contact</a>
-        <a href="loading.html" target="_blank">Extras</a>
-        <a href="login.html" target="_blank">Login</a>
-    </nav>
-<main>
 <body>
-    <h2 class="head2">Group Members</h2>
-    <br>
-    <p class="txt2">Josh Sooknanan (104376) -Group Leader<br>
-        Akeemei James (104908)<br>Kalina Joseph (104093)<br>Dhanesh Kalladeen (104837)</p>
-    <footer>
-        <div class="footer-content">
-            <div class="footer-center">
-                <p>Coffee! Where have you Bean? All Rights Reserved.</p>
-                <div class="socials">
-                    <a href="https://www.facebook.com/"  target="_blank" rel="noopener noreferrer"><img src="images/facebook.png" alt="Facebook Logo" class="social-logo"></a>
-                    <a href="https://www.instagram.com/"  target="_blank" rel="noopener noreferrer"><img src="images/instagram.png" alt="Instagram Logo" class="social-logo"></a>
-                    <a href="https://matias.me/nsfw/"  target="_blank" rel="noopener noreferrer"><img src="images/whatsapp.png" alt="What's App Logo" class="social-logo"  target="_blank" rel="noopener noreferrer"></a>
+    <div id="main-content">
+        <header>
+            <a href="index.html"><img class="" src="./images/Logo2.jpg" alt="Coffee House Logo" width="100"></a>
+            <h1 style="margin-right: 30px;">Coffee! Where have you bean?</h1>
+        </header>
+        <nav class="content">
+            <a href="index.html">Home</a>
+            <a href="locations.html">Our Locations</a>
+            <a href="aboutus.html">About us</a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Example@gmail.com" target="_blank">Contact</a>
+            <a href="loading.html" target="_blank">Extras</a>
+            <a href="login.html" target="_blank">Login</a>
+        </nav>
+        
+        <main>
+            <h2 class="head2">Group Members</h2>
+            <div class="group-container">
+                <h2>Our Team</h2>
+                <ul>
+                    <li>Josh Sooknanan (104376) - Leader</li>
+                    <li>Akeemei James (104908)</li>
+                    <li>Kalina Joseph (104093)</li>
+                    <li>Dhanesh Kalladeen (104837)</li>
+                </ul>
+            </div>
+        </main>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-center">
+                    <p>Coffee! Where have you Bean? All Rights Reserved.</p>
+                    <div class="socials">
+                        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><img src="images/facebook.png" alt="Facebook Logo" class="social-logo"></a>
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer"><img src="images/instagram.png" alt="Instagram Logo" class="social-logo"></a>
+                        <a href="https://matias.me/nsfw/" target="_blank" rel="noopener noreferrer"><img src="images/whatsapp.png" alt="What's App Logo" class="social-logo" target="_blank" rel="noopener noreferrer"></a>
+                    </div>
+                </div>
+                <div class="contact-info">
+                    <p>Tel: +123 123-4567<br> #9 A Public Road, In Trinidad & Tobago</p>
                 </div>
             </div>
-            <div class="contact-info">
-                <p>Tel: +123 123-4567<br> #9 A Public Road, In Trinidad & Tobago</p>
-            </div>
-        </div>
-    </footer>
+        </footer>
+    </div>
 </body>
 </html>
