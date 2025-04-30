@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Coffee</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="Images/tablogo.png"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body{
+            background-image: url('../images/backdrop.jpg');
+        }
+        .order-section {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .order-section h2 {
+            text-align: center;
+            color: #442C24;
+        }
+        .order-form label {
+            display: block;
+            margin: 1rem 0 0.5rem;
+            font-weight: bold;
+        }
+        .order-form select, .order-form input[type="number"] {
+            width: 100%;
+            padding: 0.3rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        .extras {
+            margin-top: 1rem;
+        }
+        .extras label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .order-form button, .cart-controls button {
+            margin-top: 1rem;
+            padding: 0.7rem 2rem;
+            background-color: #b5651d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .order-form button:hover, .cart-controls button:hover {
+            background-color: #8a4b1a;
+        }
+        .price-display, .delivery-fee, .total-display {
+            margin-top: 1rem;
+            font-weight: bold;
+            color: #442C24;
+        }
+        .cart {
+            background: #f9f9f9;
+            padding: 1rem;
+            margin-top: 2rem;
+            border-radius: 10px;
+        }
+        .cart ul {
+            list-style: none;
+            padding: 0;
+        }
+        .cart li {
+            border-bottom: 1px solid #ccc;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cart img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .cart-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html"><img src="./images/Logo2.jpg" alt="Coffee House Logo"></a>
+        <h1>Coffee! Where have you bean?</h1>
+    </header>
+
+    <nav class="content">
+        <a href="index.html">Home</a>
+        <a href="locations.html">Our Locations</a>
+        <a href="aboutus.html">About us</a>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Example@gmail.com" target="_blank">Contact</a>
+        <a href="order.html">Order</a>
+        <a href="login.html" target="_blank">Login</a>
+    </nav>
+
+    <section class="order-section">
+        <h2>Order Your Coffee</h2>
+        <form class="order-form" id="orderForm">
+            <label for="type">Order Type</label>
+            <select id="type" required>
+                <option value="pickup">Pick-up</option>
+                <option value="delivery">Delivery</option>
+            </select>
+
+            <label for="product">Select Product</label>
+            <label for="product">Select Product</label>
+            <select id="product" onchange="updatePrice()" required style="font-family: monospace;">
+                <option value="Mocha Frap" data-price="35" data-img="images/Mocha Frap.jpg">Mocha Frap               $35.00</option>
+                <option value="Caramel Latte" data-price="28" data-img="images/Caramel Latte.jpg">Caramel Latte            $28.00</option>
+                <option value="Hazelnut Cappuccino" data-price="30" data-img="images/Hazelnut Cappuccino.jpg">Hazelnut Cappuccino      $30.00</option>
+                <option value="Vanilla Cold Brew" data-price="32" data-img="images/Vanilla Cold Brew.jpg">Vanilla Cold Brew        $32.00</option>
+                <option value="Irish Cream Latte" data-price="34" data-img="images/IrishCreamLatte.jpg">Irish Cream Latte        $34.00</option>
+                <option value="Traditional Turkish Coffee" data-price="25" data-img="images/TurkishCoffee.jpg">Turkish Coffee           $25.00</option>
+                <option value="Coconut Iced Coffee" data-price="24" data-img="images/CoconutIcedCoffee.jpg">Coconut Iced Coffee      $24.00</option>
+                <option value="Cinnamon Dolce Latte" data-price="32" data-img="images/CinnamonDolceLatte.jpg">Cinnamon Dolce Latte     $32.00</option>
+            </select>
+            
+
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" min="1" value="1" onchange="updatePrice()" required>
+
+            <div class="extras">
+                <label><input type="checkbox" value="8" onchange="updatePrice()"> Caramel ($8.00)</label>
+                <label><input type="checkbox" value="8" onchange="updatePrice()"> Chocolate ($8.00)</label>
+                <label><input type="checkbox" value="5" onchange="updatePrice()"> Whipped Cream ($5.00)</label>
+            </div>
+
+            <div class="price-display" id="priceDisplay">Total Price: $0.00</div>
+            <button type="button" onclick="addToCart()">Add to Cart</button>
+        </form>
+
+        <div class="cart" id="cart">
+            <h3>Your Cart</h3>
+            <ul id="cartItems"></ul>
+            <div class="delivery-fee" id="deliveryFee">Delivery Fee: $0.00</div>
+            <div class="total-display" id="cartTotal">Total Order Cost: $0.00</div>
+            <div class="cart-controls">
+                <button onclick="placeOrder()">Place Order</button>
+                <button onclick="printBill()">Print Bill</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-center">
+                <p>Coffee! Where have you Bean? All Rights Reserved.</p>
+                <div class="socials">
+                    <a href="#"><img src="./images/facebook.png" alt="Facebook Logo" class="social-logo"></a>
+                    <a href="#"><img src="./images/instagram.png" alt="Instagram Logo" class="social-logo"></a>
+                    <a href="#"><img src="./images/whatsapp.png" alt="WhatsApp Logo" class="social-logo"></a>
+                </div>
+            </div>
+            <div class="contact-info">
+                <p>Tel: +123 123-4567<br> #9 A Public Road, In Trinidad & Tobago</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let cart = [];
+
+        function updatePrice() {
+            const product = document.querySelector('#product');
+            const basePrice = parseFloat(product.options[product.selectedIndex].dataset.price);
+            const quantity = parseInt(document.querySelector('#quantity').value);
+            const extras = document.querySelectorAll('.extras input[type="checkbox"]');
+
+            let extrasTotal = 0;
+            extras.forEach(extra => {
+                if (extra.checked) {
+                    extrasTotal += parseFloat(extra.value);
+                }
+            });
+
+            const total = (basePrice + extrasTotal) * quantity;
+            document.querySelector('#priceDisplay').textContent = `Total Price: $${total.toFixed(2)}`;
+            return total;
+        }
+
+        function addToCart() {
+            const productSelect = document.querySelector('#product');
+            const product = productSelect.value;
+            const price = updatePrice();
+            const quantity = parseInt(document.querySelector('#quantity').value);
+            const extras = [];
+            const image = productSelect.options[productSelect.selectedIndex].dataset.img;
+            document.querySelectorAll('.extras input[type="checkbox"]').forEach(extra => {
+                if (extra.checked) extras.push(extra.parentElement.innerText);
+            });
+            cart.push({ product, quantity, price, extras, image });
+            renderCart();
+        }
+
+        function renderCart() {
+            const cartList = document.querySelector('#cartItems');
+            const orderType = document.querySelector('#type').value;
+            cartList.innerHTML = '';
+            let total = 0;
+            cart.forEach((item) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<img src="${item.image}" alt="${item.product}"><span>${item.quantity}x ${item.product} - $${item.price.toFixed(2)}<br>Extras: ${item.extras.join(', ')}</span>`;
+                cartList.appendChild(li);
+                total += item.price;
+            });
+            const deliveryFee = orderType === 'delivery' ? 30 : 0;
+            document.getElementById('deliveryFee').innerText = `Delivery Fee: $${deliveryFee.toFixed(2)}`;
+            document.getElementById('cartTotal').innerText = `Total Order Cost: $${(total + deliveryFee).toFixed(2)}`;
+        }
+
+        function placeOrder() {
+            if (cart.length === 0) {
+                alert('Cart is empty!');
+                return;
+            }
+            alert('Order placed successfully!');
+            cart = [];
+            renderCart();
+        }
+
+        function printBill() {
+            if (cart.length === 0) {
+                alert('Cart is empty!');
+                return;
+            }
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFontSize(18);
+            doc.text("Coffee! Where have you Bean?", 20, 20);
+            doc.addImage("Images/tablogo.png", "PNG", 150, 10, 40, 30);
+            doc.setFontSize(12);
+
+            let y = 50;
+            cart.forEach((item, index) => {
+                doc.text(`${item.quantity}x ${item.product} - $${item.price.toFixed(2)}`, 20, y);
+                y += 7;
+                doc.text(`Extras: ${item.extras.join(', ')}`, 20, y);
+                y += 10;
+            });
+
+            const orderType = document.querySelector('#type').value;
+            const deliveryFee = orderType === 'delivery' ? 30 : 0;
+            y += 5;
+            doc.text(`Delivery Fee: $${deliveryFee.toFixed(2)}`, 20, y);
+            y += 10;
+            const totalText = document.getElementById('cartTotal').innerText;
+            doc.text(totalText, 20, y);
+
+            doc.save("CoffeeOrderBill.pdf");
+        }
+
+        updatePrice();
+    </script>
+</body>
+</html>
