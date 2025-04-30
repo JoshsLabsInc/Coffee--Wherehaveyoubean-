@@ -245,87 +245,53 @@
             document.getElementById('cartTotal').innerText = `Total Order Cost: $${(total + deliveryFee).toFixed(2)}`;
         }
 
-        function placeOrder() {
-            const orderType = document.querySelector('#type').value;
-
-            if (!orderType) {
-                alert('Please select an order type before placing your order.');
-                return;
-            }
-
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-
-            alert('Order placed successfully!');
-            cart = [];
-            renderCart();
-            location.reload();
-        }
-
         function printBill() {
-            const orderType = document.querySelector('#type').value;
-
-            if (!orderType) {
-                alert('Please select an order type before printing the bill.');
-                return;
-            }
-
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            doc.setFontSize(18);
-            doc.text("Coffee! Where have you Bean?", 20, 20);
-            doc.addImage("Images/tablogo.png", "PNG", 150, 10, 40, 30);
-            doc.setFontSize(12);
-
-            let y = 50;
-            cart.forEach((item, index) => {
-                doc.text(`${item.quantity}x ${item.product} - $${item.price.toFixed(2)}`, 20, y);
-                y += 7;
-                doc.text(`Extras: ${item.extras.join(', ')}`, 20, y);
-                y += 10;
-            });
-
-            const deliveryFee = orderType === 'delivery' ? 30 : 0;
-            y += 5;
-            doc.text(`Delivery Fee: $${deliveryFee.toFixed(2)}`, 20, y);
-            y += 10;
-            const totalText = document.getElementById('cartTotal').innerText;
-            doc.text(totalText, 20, y);
-
-            doc.save("CoffeeOrderBill.pdf");
-        }
-
-        function updatePrice() {
-        const product = document.querySelector('#product');
-        const selectedOption = product.options[product.selectedIndex];
-        if (!selectedOption || !selectedOption.dataset.price) {
-            document.querySelector('#priceDisplay').textContent = `Total Price: $0.00`;
-            return 0;
-        }
-    
-        const basePrice = parseFloat(selectedOption.dataset.price);
-        const quantity = parseInt(document.querySelector('#quantity').value) || 1;
-        const extras = document.querySelectorAll('.extras input[type="checkbox"]');
-    
-        let extrasTotal = 0;
-        extras.forEach(extra => {
-            if (extra.checked) {
-                extrasTotal += parseFloat(extra.value);
-            }
-        });
-    
-        const total = (basePrice + extrasTotal) * quantity;
-        document.querySelector('#priceDisplay').textContent = `Total Price: $${total.toFixed(2)}`;
-        return total;
+    if (cart.length === 0) {
+        alert('Cart is empty!');
+        return;
     }
+
+    const orderType = document.querySelector('#type').value;
+    if (!orderType) {
+        alert('Please choose an order type before printing the bill.');
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Coffee! Where have you Bean?", 20, 20);
+
+    try {
+        doc.addImage("images/tablogo.png", "PNG", 150, 10, 40, 30);
+    } catch (error) {
+        console.error("Error adding image to PDF:", error);
+    }
+
+    doc.setFontSize(12);
+
+    let y = 50;
+    cart.forEach((item) => {
+        doc.text(`${item.quantity}x ${item.product} - $${item.price.toFixed(2)}`, 20, y);
+        y += 7;
+        if (item.extras.length > 0) {
+            doc.text(`Extras: ${item.extras.join(', ')}`, 20, y);
+            y += 7;
+        }
+    });
+
+    const deliveryFee = orderType === 'delivery' ? 30 : 0;
+    y += 5;
+    doc.text(`Delivery Fee: $${deliveryFee.toFixed(2)}`, 20, y);
+    y += 10;
+
+    const total = cart.reduce((sum, item) => sum + item.price, 0) + deliveryFee;
+    doc.text(`Total Order Cost: $${total.toFixed(2)}`, 20, y);
+
+    doc.save("CoffeeOrderBill.pdf");
+}
+
     </script>
 </body>
 </html>
