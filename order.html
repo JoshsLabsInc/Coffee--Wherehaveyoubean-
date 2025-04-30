@@ -292,6 +292,26 @@
     doc.save("CoffeeOrderBill.pdf");
 }
 
+function placeOrder() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const orderType = document.querySelector('#type').value;
+    if (!orderType) {
+        alert("Please select an order type.");
+        return;
+    }
+
+    alert("Order placed successfully!");
+    cart = [];
+    renderCart();
+    document.querySelector('#quantity').value = '';
+    document.querySelectorAll('.extras input[type="checkbox"]').forEach(cb => cb.checked = false);
+}
+
+
     </script>
 </body>
 </html>
