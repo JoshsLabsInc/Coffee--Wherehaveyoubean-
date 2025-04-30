@@ -303,8 +303,29 @@
             doc.save("CoffeeOrderBill.pdf");
         }
 
-        updatePrice();
-
+        function updatePrice() {
+        const product = document.querySelector('#product');
+        const selectedOption = product.options[product.selectedIndex];
+        if (!selectedOption || !selectedOption.dataset.price) {
+            document.querySelector('#priceDisplay').textContent = `Total Price: $0.00`;
+            return 0;
+        }
+    
+        const basePrice = parseFloat(selectedOption.dataset.price);
+        const quantity = parseInt(document.querySelector('#quantity').value) || 1;
+        const extras = document.querySelectorAll('.extras input[type="checkbox"]');
+    
+        let extrasTotal = 0;
+        extras.forEach(extra => {
+            if (extra.checked) {
+                extrasTotal += parseFloat(extra.value);
+            }
+        });
+    
+        const total = (basePrice + extrasTotal) * quantity;
+        document.querySelector('#priceDisplay').textContent = `Total Price: $${total.toFixed(2)}`;
+        return total;
+    }
     </script>
 </body>
 </html>
