@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee? Where have you Bean?</title>
-    <link rel="stylesheet" href="css/loader.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" type="image/x-icon" href="images/tablogo.png"/>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Coffee? Where have you Bean?</title>
+<link href="css/loader.css" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+<link href="images/tablogo.png" rel="shortcut icon" type="image/x-icon"/>
+<style>
 
         .content-block {
             opacity: 0;
@@ -41,131 +42,148 @@
             justify-content: center;
             z-index: 9999;
         }
-    </style>
+    
+
+/* === Back to Top Button Styling === */
+#backToTop {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999;
+    background-color: #d4934c;
+    color: white;
+    border: none;
+    outline: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.3s ease;
+}
+#backToTop:hover {
+    opacity: 0.8;
+}
+</style>
 </head>
 <body>
-    <div id="loader">
-        <div class="cup">
-            <span class="steam"></span>
-            <span class="steam"></span>
-            <span class="steam"></span>
-            <div class="cup-handle"></div>
-        </div>
-    </div>
-    
-    <div id="main-content">
-        <header>
-            <a href="index.html"><img class="" src="./images/Logo2.jpg" alt="Coffee House Logo" width="100"></a>
-            <h1>Coffee! Where have you bean?</h1>
-        </header>
-        <nav class="content">
-            <a href="index.html">Home</a>
-            <a href="locations.html">Our Locations</a>
-            <a href="aboutus.html">About us</a>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=Example@gmail.com" target="_blank">Contact</a>
-            <a href="order.html">Order</a>
-            <a href="login.html" target="_blank">Login</a>
-        </nav>
-        <main>
-            <div class="container">
-                <h2 class="head">Welcome to our Coffee House</h2>
-                <br>
-                <p class="txt">Your one-stop destination for the finest coffee blends. It's Bean a while, check out our new menu.</p>
-                <br>
-                <a href="#menu" id="menu" class="coffee-button">Menu</a>
-            </div>
-            <br>
-            <br>
-            <br>
-            <br>
-        </main>
-    </div>
-    <section class="content-block">
-        <img src="images/Mocha Frap.jpg" alt="Mocha Frappuccino">
-        <div class="text-content">
-            <h2>Mocha Frap</h2>
-            <br>
-            <p>Indulge in pure bliss with our Mocha Frappuccino! A rich blend of bold espresso, velvety chocolate, and creamy milk, perfectly blended with ice for a smooth, refreshing treat. Topped with fluffy whipped cream and a drizzle of chocolate, every sip is a delightful escape. Cool, creamy and irresistible grab yours now!</p>
-        </div>
-    </section>
-
-    <section class="content-block">
-        <img src="images/Caramel Latte.jpg" alt="Caramel Latte">
-        <div class="text-content">
-            <h2>Caramel Latte</h2>
-            <br>
-            <p>Savor the smooth, buttery taste of our Caramel Latte! A rich shot of espresso blended with steamed milk and a swirl of golden caramel, creating a perfectly balanced, creamy delight. Finished with a caramel drizzle, each sip is pure indulgence. Warm, sweet, and irresistibly smooth. Treat yourself with one today!</p>
-        </div>
-    </section>
-    <section class="content-block">
-        <img src="images/Hazelnut Cappuccino.jpg" alt="Hazelnut Cappuccino">
-        <div class="text-content">
-            <h2>Hazelnut Cappuccino</h2>
-            <br>
-            <p>Warm, nutty, and irresistibly smooth—our Hazelnut Cappuccino is crafted with bold espresso, frothy steamed milk, and a touch of sweet hazelnut syrup. Topped with a delicate layer of foam, it’s a cozy indulgence in every sip. Rich, aromatic, and oh so satisfying treat, try it today at any of our branches.</p>
-        </div>
-    </section>
-
-    <section class="content-block">
-        <img src="images/Vanilla Cold Brew.jpg" alt="Vanilla Cold Brew">
-        <div class="text-content">
-            <h2>Vanilla Cold Brew</h2>
-            <br>
-            <p>Smooth, bold, and refreshingly cool—our Vanilla Cold Brew is steeped for hours to perfection, then infused with a touch of creamy vanilla sweetness. Served over ice, it’s the perfect balance of rich coffee flavor and silky smoothness. Cool, bold, and naturally sweet. Fuel your day with every sip!</p>
-        </div>
-    </section>
-    <section class="content-block">
-        <img src="images/IrishCreamLatte.jpg" alt="Irish Cream Latte">
-        <div class="text-content">
-            <h2>Irish Cream Latte</h2>
-            <br>
-            <p>A comforting blend of rich espresso and smooth milk infused with velvety Irish cream flavor. Topped with a light foam and a hint of cocoa, it’s your perfect cozy moment in a cup. Indulgent, warm, and deliciously creamy!</p>
-        </div>
-    </section>
-    
-    <section class="content-block">
-        <img src="images/TurkishCoffee.jpg" alt="Turkish Coffee">
-        <div class="text-content">
-            <h2>Traditional Turkish Coffee</h2>
-            <br>
-            <p>Brewed the authentic way — finely ground beans simmered in a cezve and served unfiltered for a bold, aromatic, and thick experience. Sip slowly, savor the intensity, and taste tradition in every rich cup.</p>
-        </div>
-    </section>
-    
-    <section class="content-block">
-        <img src="images/CoconutIcedCoffee.jpg" alt="Coconut Iced Coffee">
-        <div class="text-content">
-            <h2>Coconut Iced Coffee</h2>
-            <br>
-            <p>Beat the heat with our tropical twist — chilled espresso, a splash of coconut milk, and a hint of vanilla syrup over ice. Creamy, nutty, and irresistibly refreshing. A beachside vibe in every sip.</p>
-        </div>
-    </section>
-    
-    <section class="content-block">
-        <img src="images/CinnamonDolceLatte.jpg" alt="Cinnamon Dolce Latte">
-        <div class="text-content">
-            <h2>Cinnamon Dolce Latte</h2>
-            <br>
-            <p>Sweet and spicy come together in this delightful cup. Espresso mixed with steamed milk and cinnamon dolce syrup, topped with whipped cream and a cinnamon sugar sprinkle. A hug in a mug — cozy and flavorful.</p>
-        </div>
-    </section>
-        <footer>
-            <div class="footer-content">
-                <div class="footer-center">
-                    <p>Coffee! Where have you Bean? All Rights Reserved.</p>
-                    <div class="socials">
-                        <a href="www.instagram.com"  target="_blank" rel="noopener noreferrer"><img src="./images/facebook.png" alt="Facebook Logo" class="social-logo"></a>
-                        <a href="www.facebook.com"  target="_blank" rel="noopener noreferrer"><img src="./images/instagram.png" alt="Instagram Logo" class="social-logo"></a>
-                        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUIcmlja3JvbGw%3D"  target="_blank" rel="noopener noreferrer"><img src="./images/whatsapp.png" alt="WhatsApp Logo" class="social-logo"></a>
-                    </div>
-                </div>
-                <div class="contact-info">
-                    <p>Tel: +123 123-4567<br> #9 A Public Road, In Trinidad & Tobago</p>
-                </div>
-            </div>
-        </footer>
-    </div>
-    <script>
+<div id="loader">
+<div class="cup">
+<span class="steam"></span>
+<span class="steam"></span>
+<span class="steam"></span>
+<div class="cup-handle"></div>
+</div>
+</div>
+<div id="main-content">
+<header>
+<a href="index.html"><img alt="Coffee House Logo" class="" src="./images/Logo2.jpg" width="100"/></a>
+<h1>Coffee! Where have you bean?</h1>
+</header>
+<nav class="content">
+<a href="index.html">Home</a>
+<a href="locations.html">Our Locations</a>
+<a href="aboutus.html">About us</a>
+<a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=Example@gmail.com" target="_blank">Contact</a>
+<a href="order.html">Order</a>
+<a href="login.html" target="_blank">Login</a>
+</nav>
+<main>
+<div class="container">
+<h2 class="head">Welcome to our Coffee House</h2>
+<br/>
+<p class="txt">Your one-stop destination for the finest coffee blends. It's Bean a while, check out our new menu.</p>
+<br/>
+<a class="coffee-button" href="#menu" id="menu">Menu</a>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+</main>
+</div>
+<section class="content-block">
+<img alt="Mocha Frappuccino" src="images/Mocha Frap.jpg"/>
+<div class="text-content">
+<h2>Mocha Frap</h2>
+<br/>
+<p>Indulge in pure bliss with our Mocha Frappuccino! A rich blend of bold espresso, velvety chocolate, and creamy milk, perfectly blended with ice for a smooth, refreshing treat. Topped with fluffy whipped cream and a drizzle of chocolate, every sip is a delightful escape. Cool, creamy and irresistible grab yours now!</p>
+</div>
+</section>
+<section class="content-block">
+<img alt="Caramel Latte" src="images/Caramel Latte.jpg"/>
+<div class="text-content">
+<h2>Caramel Latte</h2>
+<br/>
+<p>Savor the smooth, buttery taste of our Caramel Latte! A rich shot of espresso blended with steamed milk and a swirl of golden caramel, creating a perfectly balanced, creamy delight. Finished with a caramel drizzle, each sip is pure indulgence. Warm, sweet, and irresistibly smooth. Treat yourself with one today!</p>
+</div>
+</section>
+<section class="content-block">
+<img alt="Hazelnut Cappuccino" src="images/Hazelnut Cappuccino.jpg"/>
+<div class="text-content">
+<h2>Hazelnut Cappuccino</h2>
+<br/>
+<p>Warm, nutty, and irresistibly smooth—our Hazelnut Cappuccino is crafted with bold espresso, frothy steamed milk, and a touch of sweet hazelnut syrup. Topped with a delicate layer of foam, it’s a cozy indulgence in every sip. Rich, aromatic, and oh so satisfying treat, try it today at any of our branches.</p>
+</div>
+</section>
+<section class="content-block">
+<img alt="Vanilla Cold Brew" src="images/Vanilla Cold Brew.jpg"/>
+<div class="text-content">
+<h2>Vanilla Cold Brew</h2>
+<br/>
+<p>Smooth, bold, and refreshingly cool—our Vanilla Cold Brew is steeped for hours to perfection, then infused with a touch of creamy vanilla sweetness. Served over ice, it’s the perfect balance of rich coffee flavor and silky smoothness. Cool, bold, and naturally sweet. Fuel your day with every sip!</p>
+</div>
+</section>
+<section class="content-block">
+<img alt="Irish Cream Latte" src="images/IrishCreamLatte.jpg"/>
+<div class="text-content">
+<h2>Irish Cream Latte</h2>
+<br/>
+<p>A comforting blend of rich espresso and smooth milk infused with velvety Irish cream flavor. Topped with a light foam and a hint of cocoa, it’s your perfect cozy moment in a cup. Indulgent, warm, and deliciously creamy!</p>
+</div>
+</section>
+<section class="content-block">
+<img alt="Turkish Coffee" src="images/TurkishCoffee.jpg"/>
+<div class="text-content">
+<h2>Traditional Turkish Coffee</h2>
+<br/>
+<p>Brewed the authentic way — finely ground beans simmered in a cezve and served unfiltered for a bold, aromatic, and thick experience. Sip slowly, savor the intensity, and taste tradition in every rich cup.</p>
+</div>
+</section>
+<section class="content-block">
+<img alt="Coconut Iced Coffee" src="images/CoconutIcedCoffee.jpg"/>
+<div class="text-content">
+<h2>Coconut Iced Coffee</h2>
+<br/>
+<p>Beat the heat with our tropical twist — chilled espresso, a splash of coconut milk, and a hint of vanilla syrup over ice. Creamy, nutty, and irresistibly refreshing. A beachside vibe in every sip.</p>
+</div>
+</section>
+<section class="content-block">
+<img alt="Cinnamon Dolce Latte" src="images/CinnamonDolceLatte.jpg"/>
+<div class="text-content">
+<h2>Cinnamon Dolce Latte</h2>
+<br/>
+<p>Sweet and spicy come together in this delightful cup. Espresso mixed with steamed milk and cinnamon dolce syrup, topped with whipped cream and a cinnamon sugar sprinkle. A hug in a mug — cozy and flavorful.</p>
+</div>
+</section>
+<footer>
+<div class="footer-content">
+<div class="footer-center">
+<p>Coffee! Where have you Bean? All Rights Reserved.</p>
+<div class="socials">
+<a href="www.instagram.com" rel="noopener noreferrer" target="_blank"><img alt="Facebook Logo" class="social-logo" src="./images/facebook.png"/></a>
+<a href="www.facebook.com" rel="noopener noreferrer" target="_blank"><img alt="Instagram Logo" class="social-logo" src="./images/instagram.png"/></a>
+<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&amp;pp=ygUIcmlja3JvbGw%3D" rel="noopener noreferrer" target="_blank"><img alt="WhatsApp Logo" class="social-logo" src="./images/whatsapp.png"/></a>
+</div>
+</div>
+<div class="contact-info">
+<p>Tel: +123 123-4567<br/> #9 A Public Road, In Trinidad &amp; Tobago</p>
+</div>
+</div>
+</footer>
+<script>
         window.addEventListener("load", function() {
             setTimeout(function() {
                 document.getElementById("loader").style.display = "none";
@@ -181,7 +199,7 @@
             delay += 0.2; // stagger each by 0.2s
         });
     </script>
-    <script>
+<script>
         console.log("<Joshua's Lab's est 2024>")
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -195,5 +213,36 @@
             observer.observe(element);
         });
         </script>
-</body>
+<button id="backToTop" title="Back to top">↑</button><script>
+const backToTopButton = document.getElementById("backToTop");
+const containerSection = document.querySelector(".container");
+const footer = document.querySelector("footer");
+
+window.addEventListener("scroll", () => {
+    const containerTop = containerSection.getBoundingClientRect().top;
+    const footerTop = footer.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+
+    // Show button if past container
+    if (containerTop < windowHeight * 0.75) {
+        backToTopButton.style.display = "block";
+    } else {
+        backToTopButton.style.display = "none";
+    }
+
+    // Adjust opacity when near or overlapping footer
+    if (footerTop < windowHeight) {
+        backToTopButton.style.opacity = "0.4";
+    } else {
+        backToTopButton.style.opacity = "1";
+    }
+});
+
+backToTopButton.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+</script></body>
 </html>
