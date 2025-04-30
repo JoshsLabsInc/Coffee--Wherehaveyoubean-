@@ -307,6 +307,8 @@ function placeOrder() {
     alert("Order placed successfully!");
     cart = [];
     renderCart();
+    location.reload();
+
     document.querySelector('#quantity').value = '';
     document.querySelectorAll('.extras input[type="checkbox"]').forEach(cb => cb.checked = false);
 }
