@@ -108,12 +108,14 @@
         <form class="order-form" id="orderForm">
             <label for="type">Order Type</label>
             <select id="type" required>
+                <option value="" disabled selected>Choose an order type...</option>
                 <option value="pickup">Pick-up</option>
                 <option value="delivery">Delivery</option>
             </select>
 
             <label for="product">Select Product</label>
             <select id="product" onchange="updatePrice()" required style="font-family: monospace;">
+                <option value="" disabled selected>Select a product...</option>
                 <option value="Mocha Frap" data-price="35" data-img="images/Mocha Frap.jpg">Mocha Frap               $35.00</option>
                 <option value="Caramel Latte" data-price="28" data-img="images/Caramel Latte.jpg">Caramel Latte            $28.00</option>
                 <option value="Hazelnut Cappuccino" data-price="30" data-img="images/Hazelnut Cappuccino.jpg">Hazelnut Cappuccino      $30.00</option>
