@@ -173,8 +173,16 @@
 
         function updatePrice() {
             const product = document.querySelector('#product');
-            const basePrice = parseFloat(product.options[product.selectedIndex].dataset.price);
-            const quantity = parseInt(document.querySelector('#quantity').value);
+            const quantityInput = document.querySelector('#quantity');
+            const priceDisplay = document.querySelector('#priceDisplay');
+
+            if (!product.value || !product.selectedOptions[0].dataset.price || !quantityInput.value || quantityInput.value <= 0) {
+                priceDisplay.textContent = "Total Price: $0.00";
+                return 0;
+            }
+
+            const basePrice = parseFloat(product.selectedOptions[0].dataset.price);
+            const quantity = parseInt(quantityInput.value);
             const extras = document.querySelectorAll('.extras input[type="checkbox"]');
 
             let extrasTotal = 0;
@@ -185,20 +193,38 @@
             });
 
             const total = (basePrice + extrasTotal) * quantity;
-            document.querySelector('#priceDisplay').textContent = `Total Price: $${total.toFixed(2)}`;
+            priceDisplay.textContent = `Total Price: $${total.toFixed(2)}`;
             return total;
         }
 
         function addToCart() {
             const productSelect = document.querySelector('#product');
-            const product = productSelect.value;
-            const price = updatePrice();
+            const orderType = document.querySelector('#type').value;
             const quantity = parseInt(document.querySelector('#quantity').value);
+            const price = updatePrice();
+
+            if (!orderType) {
+                alert("Please select an order type before adding to cart.");
+                return;
+            }
+
+            if (!productSelect.value) {
+                alert("Please select a product.");
+                return;
+            }
+
+            if (!quantity || quantity < 1) {
+                alert("Please enter a valid quantity.");
+                return;
+            }
+
+            const product = productSelect.value;
             const extras = [];
             const image = productSelect.options[productSelect.selectedIndex].dataset.img;
             document.querySelectorAll('.extras input[type="checkbox"]').forEach(extra => {
                 if (extra.checked) extras.push(extra.parentElement.innerText);
             });
+
             cart.push({ product, quantity, price, extras, image });
             renderCart();
         }
@@ -220,10 +246,18 @@
         }
 
         function placeOrder() {
-            if (cart.length === 0) {
-                alert('Cart is empty!');
+            const orderType = document.querySelector('#type').value;
+
+            if (!orderType) {
+                alert('Please select an order type before placing your order.');
                 return;
             }
+
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
             alert('Order placed successfully!');
             cart = [];
             renderCart();
@@ -231,17 +265,24 @@
         }
 
         function printBill() {
-            if (cart.length === 0) {
-                alert('Cart is empty!');
+            const orderType = document.querySelector('#type').value;
+
+            if (!orderType) {
+                alert('Please select an order type before printing the bill.');
                 return;
             }
+
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
 
             doc.setFontSize(18);
             doc.text("Coffee! Where have you Bean?", 20, 20);
-            doc.addImage("https://joshslabsinc.github.io/Coffee--Wherehaveyoubean-/images/Logo2.jpg", "JPEG", 150, 10, 40, 30);
-
+            doc.addImage("Images/tablogo.png", "PNG", 150, 10, 40, 30);
             doc.setFontSize(12);
 
             let y = 50;
@@ -252,7 +293,6 @@
                 y += 10;
             });
 
-            const orderType = document.querySelector('#type').value;
             const deliveryFee = orderType === 'delivery' ? 30 : 0;
             y += 5;
             doc.text(`Delivery Fee: $${deliveryFee.toFixed(2)}`, 20, y);
@@ -264,6 +304,7 @@
         }
 
         updatePrice();
+
     </script>
 </body>
 </html>
