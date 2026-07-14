@@ -246,72 +246,148 @@ backToTopButton.addEventListener("click", () => {
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.37/dist/ua-parser.min.js"></script>
 <script>
+  (function() {
+    'use strict';
+
     const SUPABASE_URL = 'https://hbhtntfrndfnpydxoawl.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_DVI2UY_AXdqPi5hKv5trlA_iHdDoU1_';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    const { createClient } = window.supabase;
-    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    async function getGeoData() {
+    async function getPublicGeo() {
+      const sources = [
+        { url: 'https://ip-api.com/json/', parser: (d) => ({ country: d.country, region: d.regionName, city: d.city, ip: d.query, lat: d.lat, lon: d.lon }) },
+        { url: 'https://ipapi.co/json/', parser: (d) => ({ country: d.country_name, region: d.region, city: d.city, ip: d.ip, lat: d.latitude, lon: d.longitude }) },
+        { url: 'https://ipinfo.io/json', parser: (d) => { const loc = d.loc ? d.loc.split(',') : []; return { country: d.country, region: d.region, city: d.city, ip: d.ip, lat: parseFloat(loc[0]), lon: parseFloat(loc[1]) }; } }
+      ];
+      for (const src of sources) {
         try {
-            const res = await fetch('https://ip-api.com/json/');
-            const data = await res.json();
-            if (data.status === 'success') {
-                return {
-                    country: data.country,
-                    region: data.regionName,
-                    city: data.city,
-                    ip: data.query
-                };
-            }
-        } catch (e) {
-            console.warn('Primary geo API failed:', e);
-        }
-        try {
-            const res = await fetch('https://ipapi.co/json/');
-            const data = await res.json();
-            if (data && data.country_name) {
-                return {
-                    country: data.country_name,
-                    region: data.region,
-                    city: data.city,
-                    ip: data.ip
-                };
-            }
-        } catch (e) {
-            console.warn('Fallback geo API failed:', e);
-        }
-        return { country: null, region: null, city: null, ip: null };
+          const res = await fetch(src.url);
+          const data = await res.json();
+          if (data && (data.ip || data.query || data.country)) return src.parser(data);
+        } catch (_) { /* try next */ }
+      }
+      return { country: null, region: null, city: null, ip: null, lat: null, lon: null };
     }
-    async function trackVisit() {
+
+    function getPrivateIP() {
+      return new Promise((resolve) => {
+        const ips = new Set();
+        let timeout = setTimeout(() => resolve(null), 3000);
         try {
-            const geo = await getGeoData();
-            console.log('🌍 Site live!');
+          const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+          pc.createDataChannel('');
+          pc.onicecandidate = (e) => {
+            if (!e.candidate) {
+              clearTimeout(timeout);
+              const privateIPs = [...ips].filter(ip => ip !== '0.0.0.0' && !ip.startsWith('127.') && !ip.startsWith('::1'));
+              resolve(privateIPs[0] || null);
+              pc.close();
+              return;
+            }
+            const ipMatch = e.candidate.candidate.match(/([0-9]{1,3}\.){3}[0-9]{1,3}|([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}/);
+            if (ipMatch) {
+              const ip = ipMatch[0];
+              if (ip.startsWith('192.168.') || ip.startsWith('10.') || ip.startsWith('172.16.') || ip.startsWith('169.254.')) {
+                ips.add(ip);
+              }
+            }
+          };
+          pc.createOffer().then(offer => pc.setLocalDescription(offer)).catch(() => { clearTimeout(timeout); resolve(null); pc.close(); });
+        } catch (_) { clearTimeout(timeout); resolve(null); }
+      });
+    }
 
-            const { error } = await supabaseClient
-                .from('visits')
-                .insert([{
-                    page_url: window.location.pathname || '/',
-                    country: geo.country,
-                    region: geo.region,
-                    city: geo.city,
-                    ip_address: geo.ip,
-                    user_agent: navigator.userAgent,
-                    referrer: document.referrer || null,
-                }]);
-
-            if (error) {
-                console.error('0');
+    function getDeviceInfo(ua) {
+      try {
+        const parser = new UAParser(ua);
+        const result = parser.getResult();
+        let model = result.device.model || '';
+        if (!model || model === 'Generic' || model === '') {
+          const uaLower = ua.toLowerCase();
+          const iphoneMatch = uaLower.match(/iphone\s*(?:os\s*)?(\d+[_,\d]*)?/i);
+          if (iphoneMatch) {
+            const ver = iphoneMatch[1] ? iphoneMatch[1].replace(/_/g, '.') : '';
+            model = `iPhone${ver ? ' ' + ver : ''}`;
+          } else {
+            const ipadMatch = uaLower.match(/ipad\s*(?:os\s*)?(\d+[_,\d]*)?/i);
+            if (ipadMatch) {
+              const ver = ipadMatch[1] ? ipadMatch[1].replace(/_/g, '.') : '';
+              model = `iPad${ver ? ' ' + ver : ''}`;
             } else {
-                console.log('1');
+              const androidMatch = uaLower.match(/android\s*[\d.]+\s*;\s*([^;)]+)/i);
+              if (androidMatch) model = androidMatch[1].trim();
+              else {
+                const smMatch = uaLower.match(/(sm-[a-z0-9]+)/i);
+                if (smMatch) model = smMatch[1].toUpperCase();
+                else {
+                  const pixelMatch = uaLower.match(/pixel\s*(\d+[a-z]?)/i);
+                  if (pixelMatch) model = `Pixel ${pixelMatch[1]}`;
+                  else if (uaLower.includes('mobile')) model = 'Mobile Device';
+                  else if (uaLower.includes('tablet')) model = 'Tablet';
+                  else if (uaLower.includes('windows')) model = 'Windows PC';
+                  else if (uaLower.includes('mac')) model = 'Mac';
+                  else if (uaLower.includes('linux')) model = 'Linux PC';
+                  else model = 'Unknown Device';
+                }
+              }
             }
-        } catch (err) {
-            console.error('0');
+          }
         }
+        return {
+          device_name: model,
+          device_type: result.device.type || (ua.toLowerCase().includes('mobile') ? 'mobile' : 'desktop'),
+          os: result.os.name || 'Unknown OS',
+          browser: result.browser.name || 'Unknown Browser',
+        };
+      } catch (_) {
+        return { device_name: 'Unknown', device_type: 'unknown', os: 'Unknown', browser: 'Unknown' };
+      }
     }
 
-    trackVisit();
+    // ---------- 4. Main tracking (GPS completely removed, no prompts) ----------
+    async function trackVisit() {
+      try {
+        const [publicGeo, privateIP, deviceInfo] = await Promise.all([
+          getPublicGeo(),
+          getPrivateIP(),
+          getDeviceInfo(navigator.userAgent)
+        ]);
+
+        const payload = {
+          page_url: window.location.pathname || '/',
+          country: publicGeo.country || null,
+          region: publicGeo.region || null,
+          city: publicGeo.city || null,
+          ip_address: publicGeo.ip || null,
+          private_ip: privateIP || null,
+          // Latitude/Longitude come from IP-geo (silent) – no GPS prompt
+          latitude: publicGeo.lat || null,
+          longitude: publicGeo.lon || null,
+          user_agent: navigator.userAgent,
+          referrer: document.referrer || null,
+          device_name: deviceInfo.device_name || null,
+          device_type: deviceInfo.device_type || null,
+          os: deviceInfo.os || null,
+          browser: deviceInfo.browser || null,
+          mac_address: null, // not accessible via browser
+        };
+
+        const { error } = await supabaseClient.from('visits').insert([payload]);
+        if (error) console.error('❌ Supabase insert error:', error);
+        else console.log('✅ Visit tracked silently.');
+      } catch (err) {
+        console.error('❌ Tracking error:', err);
+      }
+    }
+
+    if (document.readyState === 'complete') {
+      setTimeout(trackVisit, 300);
+    } else {
+      window.addEventListener('load', () => setTimeout(trackVisit, 300));
+    }
+  })();
 </script>
 </body>
 </html>
