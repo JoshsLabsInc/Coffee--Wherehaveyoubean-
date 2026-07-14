@@ -244,5 +244,74 @@ backToTopButton.addEventListener("click", () => {
         behavior: "smooth"
     });
 });
-</script></body>
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+<script>
+    const SUPABASE_URL = 'https://hbhtntfrndfnpydxoawl.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_DVI2UY_AXdqPi5hKv5trlA_iHdDoU1_';
+
+    const { createClient } = window.supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function getGeoData() {
+        try {
+            const res = await fetch('https://ip-api.com/json/');
+            const data = await res.json();
+            if (data.status === 'success') {
+                return {
+                    country: data.country,
+                    region: data.regionName,
+                    city: data.city,
+                    ip: data.query
+                };
+            }
+        } catch (e) {
+            console.warn('Primary geo API failed:', e);
+        }
+        try {
+            const res = await fetch('https://ipapi.co/json/');
+            const data = await res.json();
+            if (data && data.country_name) {
+                return {
+                    country: data.country_name,
+                    region: data.region,
+                    city: data.city,
+                    ip: data.ip
+                };
+            }
+        } catch (e) {
+            console.warn('Fallback geo API failed:', e);
+        }
+        return { country: null, region: null, city: null, ip: null };
+    }
+    async function trackVisit() {
+        try {
+            const geo = await getGeoData();
+            console.log('🌍 Site live!');
+
+            const { error } = await supabaseClient
+                .from('visits')
+                .insert([{
+                    page_url: window.location.pathname || '/',
+                    country: geo.country,
+                    region: geo.region,
+                    city: geo.city,
+                    ip_address: geo.ip,
+                    user_agent: navigator.userAgent,
+                    referrer: document.referrer || null,
+                }]);
+
+            if (error) {
+                console.error('0');
+            } else {
+                console.log('1');
+            }
+        } catch (err) {
+            console.error('0');
+        }
+    }
+
+    trackVisit();
+</script>
+</body>
 </html>
